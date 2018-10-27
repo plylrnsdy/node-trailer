@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+        "rootDir": ".",
+        "outDir": "out",
+
+        "module": "commonjs",
+        "strict": true,
+        "target": "es6",
+
+        "declaration": true,
+
+        "removeComments": true
+    },
+    "include": [
+        "src/**/*.ts",
+        "test/**/*.ts"
+    ],
+    "exclude": [
+        ".vscode",
+        "node_modules",
+        "out"
+    ]
+}

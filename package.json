@@ -1,0 +1,35 @@
+{
+  "name": "node-trailer",
+  "description": "",
+  "author": "plylrnsdy",
+  "version": "0.1.0",
+  "keywords": [
+    "logger",
+    "log"
+  ],
+  "main": "out/src/index.js",
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "test": "mocha"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/chai": "^4.1.6",
+    "@types/mocha": "^5.2.5",
+    "@types/node": "^10.12.0",
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0",
+    "typescript": "^3.1.3"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/plylrnsdy/node-trailer#README.md",
+  "bugs": {
+    "url": "https://github.com/plylrnsdy/node-trailer/issues",
+    "email": "plylrnsdy@163.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/plylrnsdy/node-trailer.git"
+  }
+}
