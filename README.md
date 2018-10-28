@@ -69,6 +69,11 @@ Example: Trailer#`log: (...args: any[]) => void`
 
 Built-in `accepter`.
 
+- `filterLevel(levels: string[])`: Support `setLevel(minLevel)` to limit min-level to transport for next handling.
+    - Return:
+        - [filterLowLevel, setLevel]
+            - `filterLowLevel`: (level: number, levelName: string, args: any[]) => null | undefined
+            - `setLevel`: (level: string) => void
 - `useErrorInFirstArg(level: string, args: any[])`: Use first args as Output#`error` as source of `stack`, if it is instance of `Error`.
 - `common(level: string, args: any[])`: Use build-in error as Output#`error` as source of `stack`.
 
@@ -85,7 +90,7 @@ Built-in `accepter`.
 - file?: string
 - line?: string
 - pos?: string
-- style: { [color: string]: string }
+- [style](https://github.com/plylrnsdy/node-trailer/blob/master/src/util.ts#L72): { [color: string]: string }
 
 ### trailer.handlers
 

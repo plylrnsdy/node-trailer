@@ -6,13 +6,13 @@ import { Output } from './accepters';
 
 export interface Options {
     [level: string]: Record<string, any> & {
-        accepters?: Array<(level: string, args: any[]) => Output | void>
+        accepters?: Array<(level: number, levelName: string, args: any[]) => Output | null | undefined>
         handlers?: Array<(output: Output) => void>
         appenders?: Array<(output: Output) => void>
     }
 }
 interface DefaultOptions extends Record<string, any> {
-    accepters: Array<(level: string, args: any[]) => Output | void>
+    accepters: Array<(level: number, levelName: string, args: any[]) => Output | null | undefined>
     handlers: Array<(output: Output) => void>
     appenders: Array<(output: Output) => void>
 }
@@ -31,20 +31,24 @@ export function create(options?: Options & { levels?: string[] }) {
     else
         options = DEFAULT_OPTIONS;
 
-    _.arrayEach(options.levels || DEFAULT_OPTIONS.levels, level => {
-        logger[level] = (...args: any[]) => log(options as Options, level, args)
+    if (options.default.accepters === DEFAULT_OPTIONS.default.accepters) {
+        logger.setLevel = DEFAULT_OPTIONS.__setLevel__ as any;
+    }
+
+    _.arrayEach(options.levels || DEFAULT_OPTIONS.levels, (levelName, level) => {
+        logger[levelName] = (...args: any[]) => log(options as Options, level, levelName, args)
     });
 
     return logger;
 }
 
-function log(options: Options, level: string, args: any[]) {
+function log(options: Options, level: number, levelName: string, args: any[]) {
     let _default = options.default as DefaultOptions;
-    let _level = options[level] || _default;
+    let _level = options[levelName] || _default;
     let output: any = null;
 
     _.arrayEach(_level.accepters || _default.accepters, accepter => {
-        output = accepter(level, args);
+        output = accepter(level, levelName, args);
         return output === undefined;
     });
     if (!output) return;

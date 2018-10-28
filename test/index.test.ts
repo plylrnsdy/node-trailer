@@ -15,3 +15,8 @@ try {
     logger.error(error, 'user\'s error message');
 }
 logger.fatal('user\'s fatal message');
+
+
+logger.setLevel('info');
+logger.debug('user\'s debug message');
+logger.info('user\'s info message');

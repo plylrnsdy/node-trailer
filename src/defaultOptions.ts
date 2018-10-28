@@ -1,8 +1,11 @@
 import * as path from 'path';
 import { Options } from '.';
-import { useErrorInFirstArg, common, Output } from "./accepters";
+import { filterLevel, useErrorInFirstArg, common, Output } from "./accepters";
 import { date, level, message, stack, colorOutput } from "./handlers";
 import { colorConsole } from "./appenders";
+
+const DEFAULT_LEVELS =  ['log', 'debug', 'info', 'warn', 'error', 'fatal'];
+const [filterLowLevel, setLevel] = filterLevel(DEFAULT_LEVELS);
 
 const theme = (color: string) =>
     `[{{timestamp}}] {{style.${color}}}{{style.inverse}} {{level}} {{style.no_inverse}} {{message}}{{style.clear}} {{style.grey}}@ {{method}} ({{file}} :{{line}}:{{pos}}){{style.clear}}`;
@@ -30,9 +33,10 @@ const    INFO_HANDLERS = [h1, h2, h3, h4, h5,         h8, colorOutput.format(the
 const   ERROR_HANDLERS = [h1, h2, h3, h4, h5, h6, h7,     colorOutput.format(themeError)];
 
 const DEFAULT_OPTIONS: Options & { levels: string[] } = {
-    levels: ['log', 'debug', 'info', 'warn', 'error', 'fatal'],
+    levels: DEFAULT_LEVELS,
     default: {
         accepters: [
+            filterLowLevel,
             useErrorInFirstArg,
             common,
         ],
@@ -44,6 +48,7 @@ const DEFAULT_OPTIONS: Options & { levels: string[] } = {
     warn: { handlers: WARN_HANDLERS },
     error: { handlers: ERROR_HANDLERS },
     fatal: { handlers: ERROR_HANDLERS },
+    __setLevel__: setLevel,
 }
 
 export default DEFAULT_OPTIONS;
