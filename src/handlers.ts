@@ -18,9 +18,8 @@ export const level = {
         output.level = output.level.toUpperCase();
     },
     padEnd(width: number) {
-        return function (output: Output) {
+        return (output: Output) =>
             output.level = _.padEnd(output.level, width);
-        }
     }
 }
 
@@ -46,9 +45,8 @@ export const stack = {
     simplifyRoot(root: string, replacement: string = '~') {
         let re = new RegExp(_.escapeRegExp(root), 'g');
 
-        return function (output: Output) {
+        return (output: Output) =>
             output.error.stack = (<string>output.error.stack).replace(re, replacement);
-        }
     },
     extract(featrue: RegExp = /at .+/) {
 
@@ -73,17 +71,22 @@ export const stack = {
 }
 
 export const output = {
-    format(template: string) {
-        let plainTemplate = template.replace(/\{\{[^}]+\}\}/g, '')
-        return (output: Output) =>
-            output.output = _.format(plainTemplate, output);
+    format(template: string | ((output: Output) => string)) {
+        if (typeof template === 'string') {
+            let plainTemplate = template.replace(/\{\{[^}]+\}\}/g, '');
+            return (output: Output) =>
+                output.output = _.format(plainTemplate, output);
+        } else {
+            return (output: Output) =>
+                output.output = _.format(template(output), output);
+        }
     }
 }
 
 export const colorOutput = {
-    format(template: string) {
-        return (output: Output) => {
-            output.colorOutput = _.format(template, output);
-        }
+    format(template: string | ((output: Output) => string)) {
+        return typeof template === 'string'
+            ? (output: Output) => output.colorOutput = _.format(template, output)
+            : (output: Output) => output.colorOutput = _.format(template(output), output);
     }
 }

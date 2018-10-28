@@ -56,6 +56,8 @@ function log(options: Options, level: string, args: any[]) {
         appender(output as Output));
 }
 
+export const defaultOptions = DEFAULT_OPTIONS;
+
 export const accepters = require('./accepters');
 
 export const handlers = require('./handlers');

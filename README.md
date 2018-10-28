@@ -1,5 +1,7 @@
 # node-trailer
 
+[![npm](https://img.shields.io/npm/v/node-trailer.svg)](https://npmjs.org/package/node-trailer)
+
 A logger construct by functions.
 
 ![Preview](./images/preview.png)
@@ -51,7 +53,7 @@ If return an `output`, it will stop executing other functions.
 
 #### options.`handlers`: Array<(output: Output) => void>
 
-Transform the data in `output`, finally format the data into `Output#output` or `Output#colorOutput`.
+Transform the data in `output`, finally format the data into Output#`output` or Output#`colorOutput`.
 
 #### options.`appenders`: Array<(output: Output) => void>
 
@@ -67,8 +69,8 @@ Example: Trailer#`log: (...args: any[]) => void`
 
 Built-in `accepter`.
 
-- `useErrorInFirstArg(level: string, args: any[])`: Use first args as `Output#error` as source of `stack`, if it is instance of `Error`.
-- `common(level: string, args: any[])`: Use build-in error as `Output#error` as source of `stack`.
+- `useErrorInFirstArg(level: string, args: any[])`: Use first args as Output#`error` as source of `stack`, if it is instance of `Error`.
+- `common(level: string, args: any[])`: Use build-in error as Output#`error` as source of `stack`.
 
 #### class Output
 
@@ -109,12 +111,12 @@ Built-in `handler`.
     - `filterThirdPart`: A handler for removing the row contain `node_modules` in stack.
     - `filterNative`: A handler for removing the row contain `internal` in stack.
 - output
-    - `format(template: string)`: Return a handler to format `output` data with `template` and save in Output#`output`.
+    - `format(template: string | ((output: Output) => string))`: Return a handler to format `output` data with `template` and save in Output#`output`.
         - template:
             1. `{{error.message}}` will fill with the content of Output#`error.message`.
             2. Can contain `{{style.xxx}}`, but it will be ignore.
 - colorOutput
-    - `format(template: string)`: Return a handler to format `output` data with `template` and save in Output#`colorOutput`.
+    - `format(template: string | ((output: Output) => string))`: Return a handler to format `output` data with `template` and save in Output#`colorOutput`.
         - template
             1. `{{error.message}}` will fill with the content of Output#`error.message`
             2. `{{style.red}}` will fill with the content of Output#`style.red`, after this string will show color as red in console.

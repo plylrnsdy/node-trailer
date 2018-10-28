@@ -1,16 +1,17 @@
 import * as path from 'path';
 import { Options } from '.';
-import { useErrorInFirstArg, common } from "./accepters";
+import { useErrorInFirstArg, common, Output } from "./accepters";
 import { date, level, message, stack, colorOutput } from "./handlers";
 import { colorConsole } from "./appenders";
 
 const theme = (color: string) =>
-    `[{{timestamp}}] {{style.${color}}}{{style.inverse}} {{level}} {{style.no_inverse}} {{message}}{{style.clear}} @ {{method}} ({{file}}:{{line}}:{{pos}})`;
+    `[{{timestamp}}] {{style.${color}}}{{style.inverse}} {{level}} {{style.no_inverse}} {{message}}{{style.clear}} {{style.grey}}@ {{method}} ({{file}} :{{line}}:{{pos}}){{style.clear}}`;
 
-const themeError = `[{{timestamp}}] {{style.red}}{{style.inverse}} {{level}} {{style.no_inverse}} {{message}}{{style.clear}}
-[{{style.grey}}{{timestamp}}{{style.clear}}] {{style.magenta}}{{style.inverse}} E.MSG {{style.no_inverse}} {{error.message}}{{style.clear}}
-{{error.stack}}
-`;
+// Template with condition
+const themeError = (output: Output) =>
+    output.error.message
+        ? '[{{timestamp}}] {{style.red}}{{style.inverse}} {{level}} {{style.no_inverse}} {{message}}{{style.clear}}\n[{{style.grey}}{{timestamp}}{{style.clear}}] {{style.magenta}}{{style.inverse}} E.MSG {{style.no_inverse}} {{error.message}}{{style.clear}}\n{{error.stack}}\n'
+        : '[{{timestamp}}] {{style.red}}{{style.inverse}} {{level}} {{style.no_inverse}} {{message}}{{style.clear}}\n{{error.stack}}\n';
 
 const
     h1 = date.format('yyyy-mm-dd_hh:MM:ss'),
