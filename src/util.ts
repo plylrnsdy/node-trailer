@@ -5,6 +5,12 @@ export function arrayEach<T>(arr: ArrayLike<T>, iterator: (v: T, k: number, arr:
             return;
 }
 
+export default function padStart(str: string, length: number, char: string = ' ') {
+    return str.length >= length
+        ? str
+        : char.repeat(length).slice(0, length - str.length) + str;
+}
+
 export function padEnd(str: string, length: number, char: string = ' ') {
     return str.length >= length
         ? str
@@ -45,13 +51,13 @@ export function toPath(path: string | number): (string | number)[] {
 export function dateFormat(template: string, date: Date) {
     let data: Record<string, number | string> = {
         yyyy: date.getFullYear(),
-        yy: date.getFullYear().toString().slice(2, 4),
+        yy: ('' + date.getFullYear()).slice(2, 4),
         mm: date.getMonth() + 1,
         dd: date.getDate(),
         hh: date.getHours(),
         MM: date.getMinutes(),
         ss: date.getSeconds(),
-        SSS: date.getMilliseconds().toFixed(3),
+        SSS: padStart('' + date.getMilliseconds(), 3, '0'),
         O: date.getTimezoneOffset(),
     }
     return fillTemplate(template, data);
@@ -71,11 +77,11 @@ export const style = {
     inverse: '\x1B[7m',
     strikethrough: '\x1B[9m',
 
-    noBold: '\x1B[22m',
-    noItalic: '\x1B[23m',
-    noUnderline: '\x1B[24m',
-    noInverse: '\x1B[27m',
-    noStrikethrough: '\x1B[29m',
+    no_bold: '\x1B[22m',
+    no_italic: '\x1B[23m',
+    no_underline: '\x1B[24m',
+    no_inverse: '\x1B[27m',
+    no_strikethrough: '\x1B[29m',
 
     black: '\x1B[30m',
     red: '\x1B[31m',
@@ -88,14 +94,14 @@ export const style = {
     reset: '\x1B[39m',
     grey: '\x1B[90m',
 
-    bgBlack: '\x1B[40m',
-    bgRed: '\x1B[41m',
-    bgGreen: '\x1B[42m',
-    bgYellow: '\x1B[43m',
-    bgBlue: '\x1B[44m',
-    bgMagenta: '\x1B[45m',
-    bgCyan: '\x1B[46m',
-    bgWhite: '\x1B[47m',
-    bgReset: '\x1B[49m',
-    bgGrey: '\x1B[49;5;8m',
+    bg_black: '\x1B[40m',
+    bg_red: '\x1B[41m',
+    bg_green: '\x1B[42m',
+    bg_yellow: '\x1B[43m',
+    bg_blue: '\x1B[44m',
+    bg_magenta: '\x1B[45m',
+    bg_cyan: '\x1B[46m',
+    bg_white: '\x1B[47m',
+    bg_reset: '\x1B[49m',
+    bg_grey: '\x1B[49;5;8m',
 }

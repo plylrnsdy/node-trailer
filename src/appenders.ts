@@ -1,5 +1,5 @@
 import * as _console from 'console';
-import { Output } from './Accepter';
+import { Output } from './accepters';
 import * as fs from 'fs';
 
 

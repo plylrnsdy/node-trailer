@@ -1,13 +1,20 @@
 import { style } from './util'
 
 
-export class DebugError extends Error { }
+export class DebugError extends Error {
+    constructor() {
+        super();
+        let stacks = (<string>this.stack).split('\n');
+        stacks.splice(1, 6);
+        this.stack = stacks.join('\n');
+    }
+}
 
 export class Output {
     [key: string]: any
 
     timestamp: number | string = Date.now()
-    message?: string
+    message: string = ''
 
     method: string = ''
     path: string = ''
@@ -21,7 +28,7 @@ export class Output {
         public level: string,
         public template: string = '',
         public args: any[],
-        public error: Error = new DebugError('Trailing... ')) { }
+        public error: Error = new DebugError()) { }
 }
 
 

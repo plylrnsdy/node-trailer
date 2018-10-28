@@ -1,7 +1,7 @@
 import * as _ from './util';
 import * as _console from "console";
 import DEFAULT_OPTIONS from './defaultOptions';
-import { Output } from './Accepter';
+import { Output } from './accepters';
 
 
 export interface Options {
@@ -19,8 +19,6 @@ interface DefaultOptions extends Record<string, any> {
 export interface Level<T> extends Record<string, T> { }
 export interface Trailer extends Level<(...args: any[]) => void> { }
 
-const DEFAULT_LEVELS = ['log', 'debug', 'info', 'warn', 'error', 'fatal'];
-
 export function create(options?: Options & { levels?: string[] }) {
     let logger: Trailer = {};
 
@@ -33,7 +31,7 @@ export function create(options?: Options & { levels?: string[] }) {
     else
         options = DEFAULT_OPTIONS;
 
-    _.arrayEach(options.levels || DEFAULT_LEVELS, level => {
+    _.arrayEach(options.levels || DEFAULT_OPTIONS.levels, level => {
         logger[level] = (...args: any[]) => log(options as Options, level, args)
     });
 
@@ -57,3 +55,11 @@ function log(options: Options, level: string, args: any[]) {
     _.arrayEach(_level.appenders || _default.appenders, appender =>
         appender(output as Output));
 }
+
+export const accepters = require('./accepters');
+
+export const handlers = require('./handlers');
+
+export const appenders = require('./appenders');
+
+export const util = require('./util');
