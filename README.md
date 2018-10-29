@@ -18,7 +18,7 @@ A logger construct by functions.
 
 ## Useage
 
-Use [default options](https://github.com/plylrnsdy/node-trailer/blob/master/src/defaultOptions.ts), it will output to `console`.
+Use [default options][default-options], it will output to `console`.
 
 ```javascript
 const trailer = require('node-trailer');
@@ -30,6 +30,8 @@ logger.log('log message');
 ## API
 
 ### trailer.create(`options`): [Trailer](#interface-Trailer)
+
+Create a Trailer with options. If no options, it will use [default options][default-options].
 
 #### options.`levels`: string[]
 
@@ -71,10 +73,10 @@ Built-in `accepter`.
 
 - `filterLevel(levels: string[])`: Support `setLevel(minLevel)` to limit min-level to transport for next handling.
     - Return:
-        - [filterLowLevel, setLevel]
-            - `filterLowLevel`: (level: number, levelName: string, args: any[]) => null | undefined
-            - `setLevel`: (level: string) => void
-- `useErrorInFirstArg(level: string, args: any[])`: Use first args as Output#`error` as source of `stack`, if it is instance of `Error`.
+        - [`filterLowLevel`, `setLevel`]
+            - `filterLowLevel`(level: number, levelName: string, args: any[]) => null | undefined
+            - `setLevel`(level: string) => void
+- `useErrorInFirstArg(level: string, args: any[])`: If first args is instance of `Error`, use it as Output#`error` as source of `stack`.
 - `common(level: string, args: any[])`: Use build-in error as Output#`error` as source of `stack`.
 
 #### class Output
@@ -90,7 +92,7 @@ Built-in `accepter`.
 - file?: string
 - line?: string
 - pos?: string
-- [style](https://github.com/plylrnsdy/node-trailer/blob/master/src/util.ts#L72): { [color: string]: string }
+- [style](https://github.com/plylrnsdy/node-trailer/blob/master/src/util.ts#L70): { [color: string]: string }
 
 ### trailer.handlers
 
@@ -106,8 +108,8 @@ Built-in `handler`.
 - message
     - `format`: A handler for generating Output#`message` with printf-like template.
 - stack
-    - `filterTop(level: number)`: Return a handler to remove Output#`error.stack` row 1 ~ `level`, row 1 is `Error: <error.message>`.
-        - level
+    - `filterTop(line: number)`: Return a handler to remove Output#`error.stack` row line to `level`, line 1 is `Error: <error.message>`.
+        - line
     - `simplifyRoot(root: string, replacement: string = '~')`: Return a handler to replace the path `root` in `stack` with `replacement`.
         - root
         - replacement
@@ -116,15 +118,15 @@ Built-in `handler`.
     - `filterThirdPart`: A handler for removing the row contain `node_modules` in stack.
     - `filterNative`: A handler for removing the row contain `internal` in stack.
 - output
-    - `format(template: string | ((output: Output) => string))`: Return a handler to format `output` data with `template` and save in Output#`output`.
+    - `format(template: string | ((output: Output) => string))`: Return a handler to format `Output` data with `template` and save in Output#`output`.
         - template:
-            1. `{{error.message}}` will fill with the content of Output#`error.message`.
+            1. `{{prop.sub_prop}}` will fill with the content of Output#`prop.sub_prop`.
             2. Can contain `{{style.xxx}}`, but it will be ignore.
 - colorOutput
-    - `format(template: string | ((output: Output) => string))`: Return a handler to format `output` data with `template` and save in Output#`colorOutput`.
+    - `format(template: string | ((output: Output) => string))`: Return a handler to format `Output` data with `template` and save in Output#`colorOutput`.
         - template
-            1. `{{error.message}}` will fill with the content of Output#`error.message`
-            2. `{{style.red}}` will fill with the content of Output#`style.red`, after this string will show color as red in console.
+            1. `{{prop.sub_prop}}` will fill with the content of Output#`prop.sub_prop`.
+            2. `{{style.xxx}}` will fill with the content of Output#`style.xxx`, after this string will show color as `xxx` in console.
 
 ### trailer.appenders
 
@@ -149,4 +151,4 @@ Github：[node-trailer][repository]
 
 [issues]:https://github.com/plylrnsdy/node-trailer/issues
 [repository]:https://github.com/plylrnsdy/node-trailer
-
+[default-options]:https://github.com/plylrnsdy/node-trailer/blob/master/src/defaultOptions.ts

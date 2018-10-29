@@ -1,5 +1,4 @@
 import * as path from 'path';
-import { Options } from '.';
 import { filterLevel, useErrorInFirstArg, common, Output } from "./accepters";
 import { date, level, message, stack, colorOutput } from "./handlers";
 import { colorConsole } from "./appenders";
@@ -32,7 +31,7 @@ const    WARN_HANDLERS = [h1, h2, h3, h4, h5,         h8, colorOutput.format(the
 const    INFO_HANDLERS = [h1, h2, h3, h4, h5,         h8, colorOutput.format(theme('green'))];
 const   ERROR_HANDLERS = [h1, h2, h3, h4, h5, h6, h7,     colorOutput.format(themeError)];
 
-const DEFAULT_OPTIONS: Options & { levels: string[] } = {
+const DEFAULT_OPTIONS = {
     levels: DEFAULT_LEVELS,
     default: {
         accepters: [

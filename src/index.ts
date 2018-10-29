@@ -19,13 +19,16 @@ interface DefaultOptions extends Record<string, any> {
 export interface Level<T> extends Record<string, T> { }
 export interface Trailer extends Level<(...args: any[]) => void> { }
 
+/**
+ * Create a Trailer with options.
+ */
 export function create(options?: Options & { levels?: string[] }) {
     let logger: Trailer = {};
 
     if (options)
         if (options.default)
             for (let prop of ['accepters', 'handlers', 'appenders'])
-                options.default[prop] || (options.default[prop] = DEFAULT_OPTIONS.default[prop]);
+                options.default[prop] || (options.default[prop] = (<DefaultOptions>DEFAULT_OPTIONS.default)[prop]);
         else
             options.default = DEFAULT_OPTIONS.default;
     else

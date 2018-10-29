@@ -5,12 +5,6 @@ export function arrayEach<T>(arr: ArrayLike<T>, iterator: (v: T, k: number, arr:
             return;
 }
 
-export default function padStart(str: string, length: number, char: string = ' ') {
-    return str.length >= length
-        ? str
-        : char.repeat(length).slice(0, length - str.length) + str;
-}
-
 export function padEnd(str: string, length: number, char: string = ' ') {
     return str.length >= length
         ? str
@@ -49,15 +43,16 @@ export function toPath(path: string | number): (string | number)[] {
 }
 
 export function dateFormat(template: string, date: Date) {
+    let n: number;
     let data: Record<string, number | string> = {
         yyyy: date.getFullYear(),
         yy: ('' + date.getFullYear()).slice(2, 4),
-        mm: date.getMonth() + 1,
-        dd: date.getDate(),
-        hh: date.getHours(),
-        MM: date.getMinutes(),
-        ss: date.getSeconds(),
-        SSS: padStart('' + date.getMilliseconds(), 3, '0'),
+        mm: (n = date.getMonth() + 1) < 10 ? '0' + n : n,
+        dd: (n = date.getDate()) < 10 ? '0' + n : n,
+        hh: (n = date.getHours()) < 10 ? '0' + n : n,
+        MM: (n = date.getMinutes()) < 10 ? '0' + n : n,
+        ss: (n = date.getSeconds()) < 10 ? '0' + n : n,
+        SSS: (n = date.getMilliseconds()) < 10 ? '00' + n : n < 100 ? '0' + n : n,
         O: date.getTimezoneOffset(),
     }
     return fillTemplate(template, data);
@@ -69,7 +64,13 @@ export function fillTemplate(template: string, dataObject: any) {
     return template;
 }
 
+/**
+ * Console color control character.
+ */
 export const style = {
+    /**
+     * Clear font and background style.
+     */
     clear: '\x1B[0m',
     bold: '\x1B[1m',
     italic: '\x1B[3m',
@@ -91,6 +92,9 @@ export const style = {
     magenta: '\x1B[35m',
     cyan: '\x1B[36m',
     white: '\x1B[37m',
+    /**
+     * Clear font style.
+     */
     reset: '\x1B[39m',
     grey: '\x1B[90m',
 
@@ -102,6 +106,9 @@ export const style = {
     bg_magenta: '\x1B[45m',
     bg_cyan: '\x1B[46m',
     bg_white: '\x1B[47m',
+    /**
+     * Clear background style.
+     */
     bg_reset: '\x1B[49m',
     bg_grey: '\x1B[49;5;8m',
 }

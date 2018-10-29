@@ -1,7 +1,9 @@
 # Change Log
 
 ## 0.1.3
-+ Support `setLevel(minLevel)`.
++ Support `setLevel(minLevel)`;
+* PadStart for timestamp;
++ Add JS Doc.
 
 ## 0.1.2
 + Theme template with condition.

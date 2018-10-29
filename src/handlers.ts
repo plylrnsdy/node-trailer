@@ -5,6 +5,9 @@ import { Output } from './accepters';
 
 
 export const date = {
+    /**
+     * Return a handler for formating date with template, use `yyyy`, `yy`, `mm`, `dd`, `hh`, `MM`, `ss`, `SSS`, `O`.
+     */
     format(template: string) {
         return function (output: Output) {
             let date = new Date(output.timestamp);
@@ -14,9 +17,15 @@ export const date = {
 }
 
 export const level = {
+    /**
+     * A handler for converting Output#`level` to upper.
+     */
     upper(output: Output) {
         output.level = output.level.toUpperCase();
     },
+    /**
+     * Return a handler to ensure Output#`level` min-length equaling to `width`, if less than `width`, filling with whitespace.
+     */
     padEnd(width: number) {
         return (output: Output) =>
             output.level = _.padEnd(output.level, width);
@@ -24,6 +33,9 @@ export const level = {
 }
 
 export const message = {
+    /**
+     * A handler for generating Output#`message` with printf-like template.
+     */
     format(output: Output) {
         if (!output.template) return;
         output.message = util.format(output.template, ...output.args);
@@ -36,18 +48,30 @@ const stackRe2 = /at ()([^:]+):(\d+):(\d+)/i;
 const emptyArray = ['', '', '', '', ''];
 
 export const stack = {
-    filterTop(level: number) {
+    /**
+     * Return a handler to remove Output#`error.stack` line 1 to `level`, line 1 is `Error: <error.message>`.
+     */
+    filterTop(line: number) {
         return function (output: Output) {
             let { error } = output;
-            error.stack = (<string>error.stack).split('\n').slice(level).join('\n');
+            error.stack = (<string>error.stack).split('\n').slice(line).join('\n');
         }
     },
+    /**
+     * Return a handler to replace the path `root` in `stack` with `replacement`.
+     * @param root path of current project.
+     * @param replacement string for replacing `root`.
+     */
     simplifyRoot(root: string, replacement: string = '~') {
         let re = new RegExp(_.escapeRegExp(root), 'g');
 
         return (output: Output) =>
             output.error.stack = (<string>output.error.stack).replace(re, replacement);
     },
+    /**
+     * Return a handler to extract Output#`method`, Output#`path`, Output#`file`, Output#`line` and Output#`pos` from Output#`error.stack` matched `featrue` first.
+     * @param featrue Default to be `/at .+/`.
+     */
     extract(featrue: RegExp = /at .+/) {
 
         return function (output: Output) {
@@ -62,15 +86,27 @@ export const stack = {
             }
         }
     },
+    /**
+     * A handler for removing the row contain `node_modules` in Output#`error.stack`.
+     */
     filterThirdPart(output: Output) {
         output.error.stack = (<string>output.error.stack).replace(/\n?.+node_modules.+/g, '');
     },
+    /**
+     * A handler for removing the row contain `internal` in Output#`error.stack`.
+     */
     filterNative(output: Output) {
         output.error.stack = (<string>output.error.stack).replace(/\n?.+\(internal\/.+/g, '');
     }
 }
 
 export const output = {
+    /**
+     * Return a handler to format `Output` data with `template` and save in Output#`output`.
+     * @param template
+     *     1. `{{prop.sub_prop}}` will fill with the content of Output#`prop.sub_prop`.
+     *     2. Can contain `{{style.xxx}}`, but it will be ignore.
+     */
     format(template: string | ((output: Output) => string)) {
         if (typeof template === 'string') {
             let plainTemplate = template.replace(/\{\{[^}]+\}\}/g, '');
@@ -84,6 +120,12 @@ export const output = {
 }
 
 export const colorOutput = {
+    /**
+     * Return a handler to format `Output` data with `template` and save in Output#`colorOutput`.
+     * @param template
+     *     1. `{{prop.sub_prop}}` will fill with the content of Output#`prop.sub_prop`.
+     *     2. `{{style.xxx}}` will fill with the content of Output#`style.xxx`, after this string will show color as `xxx` in console.
+     */
     format(template: string | ((output: Output) => string)) {
         return typeof template === 'string'
             ? (output: Output) => output.colorOutput = _.format(template, output)
