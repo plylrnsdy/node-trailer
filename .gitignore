@@ -1,8 +1,4 @@
-
-examples/*/*
-!examples/*/*.ts
-!examples/*/*.json
 node_modules
 out
-test/demo
 
+*.log

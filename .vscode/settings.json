@@ -9,5 +9,33 @@
     },
     "search.exclude": {
         "out": true // set this to false to include "out" folder in search results
-    }
+    },
+
+    "RunAs.globsMapToCommand": [
+      {
+        "globs": "*.*",
+        "mode": "silent",
+        "command": {
+          "win32": "start ${rPath}",
+          "linux": "gnome-open ${rPath}",
+          "darwin": "open ${rPath}"
+        },
+        "exceptions": [
+          {
+            "globs": "*.js",
+            "command": "node ${rPath}"
+          },
+          {
+            "globs": "**/*.ts",
+            "command": "ts-node -C ttypescript ${rPath}",
+            "exceptions": [
+              {
+                "globs": "*.spec.ts",
+                "command": "mocha -r ./register ${rPath}"
+              }
+            ]
+          }
+        ]
+      }
+    ],
 }

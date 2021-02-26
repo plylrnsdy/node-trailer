@@ -1,26 +1,32 @@
 {
   "name": "node-trailer",
-  "description": "A logger construct by functions.",
+  "description": "A logger construct by middleware.",
   "author": "plylrnsdy",
-  "version": "0.1.3",
+  "version": "0.2.0",
   "keywords": [
     "logger",
     "log"
   ],
   "main": "out/src/index.js",
   "scripts": {
-    "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./",
-    "test": "mocha"
+    "build": "ttsc -p .",
+    "test": "mocha -r ./register ./src/**/*.spec.{js,ts}"
   },
-  "dependencies": {},
+  "dependencies": {
+    "lodash": "^4.17.20",
+    "trough": "^1.0.5"
+  },
   "devDependencies": {
-    "@types/chai": "^4.1.6",
-    "@types/mocha": "^5.2.5",
-    "@types/node": "^10.12.0",
-    "chai": "^4.2.0",
-    "mocha": "^5.2.0",
-    "typescript": "^3.1.3"
+    "@types/chai": "^4.2.15",
+    "@types/lodash": "^4.14.168",
+    "@types/mocha": "^8.2.1",
+    "@types/node": "^14.14.30",
+    "chai": "^4.3.0",
+    "mocha": "^8.3.0",
+    "ts-node": "^9.1.1",
+    "ttypescript": "^1.5.12",
+    "typescript": "^4.1.5",
+    "typescript-transform-paths": "^2.2.3"
   },
   "license": "MIT",
   "homepage": "https://github.com/plylrnsdy/node-trailer#README.md",
