@@ -1,10 +1,17 @@
+/**
+ * @module node-trailer
+ * @typicalname trailer
+ */
+
 import { noop, zipObject } from 'lodash'
-import * as trough from 'trough'
-import { Level, levels, levelWeight } from '@/core/levels'
+import { Level, levels } from '@/core/levels'
 import DebugError from '@/core/debug-error'
-import filter from '@/middlewares/filter'
-import { MessagePart, date, error, level, message } from '@/middlewares/appender'
-import { colorConsole, logFile } from '@/middlewares/output'
+import { MessagePart } from '@/middlewares/appender'
+import defaultTheme from '@/themes/default'
+
+export { default as filter } from '@/middlewares/filter'
+export { MessagePart, date, error, level, message } from '@/middlewares/appender'
+export { colorConsole, logFile } from '@/middlewares/output'
 
 
 export type LoggerContext = {
@@ -15,24 +22,73 @@ export type LoggerContext = {
   messages: MessagePart<LoggerContext, any>[]
 }
 
-
+/**
+ * Logger's options
+ */
 export type LoggerOptions = {
+  /**
+   * Minimum level of log which can be output
+   */
   level: Level
-  logFile: string
+  /**
+   * The path of log file.
+   */
+  logFile?: string
 }
 
 const DEFAULT_OPTIONS = {
   level: 'log',
 }
 
-
 export type Logger = Record<Level, (...args: any[]) => void>
 
-export default function createLogger(options: Partial<LoggerOptions> = {}, pipeline = defaultPipeline()) {
+/**
+ * Create a logger.
+ *
+ * Basic usage:
+ *
+ * ```javascript
+ * import createLogger from "node-trailer"
+ *
+ * const logger = createLogger({ level: 'info' })
+ * logger.log('log message.') // No output
+ * logger.info('info message.') //=> info message.
+ * ```
+ *
+ * Customize:
+ *
+ * ```javascript
+ * const pipeline = trough()
+ *   // Filter
+ *   .use(filter(({ options, level }: LoggerContext) =>
+ *     levelWeight[options.level] <= levelWeight[level]
+ *   ))
+ *   // Appender
+ *   .use(level(levelColor))
+ *   .use(message())
+ *   .use(error())
+ *   // Output
+ *   .use(colorConsole())
+ *
+ * const logger = createLogger({}, pipeline)
+ * ```
+ *
+ * @param {Partial<LoggerOptions>} options Logger's options
+ * @param pipeline middlewares handling the log for customizing logger
+ * @returns {module:node-trailer~Logger}
+ */
+export function createLogger(options: Partial<LoggerOptions> = {}, pipeline = defaultTheme()): Logger {
 
   const mergedOptions = Object.assign({}, DEFAULT_OPTIONS, options) as LoggerOptions
 
   const log = (level: Level) =>
+    /**
+     * Output a specify level log.
+     *
+     * @name log|debug|info|warn|error|fatal
+     * @memberof module:Logger.prototype
+     * @return {void}
+     */
     (...args: any[]) => {
       const errIdx = args.findIndex(arg => arg instanceof Error)
       const error = errIdx > -1 ? args.splice(errIdx, 1)[0] : new DebugError()
@@ -40,23 +96,4 @@ export default function createLogger(options: Partial<LoggerOptions> = {}, pipel
     }
 
   return zipObject(levels, levels.map(log)) as Logger
-}
-
-function defaultPipeline() {
-  const colors = ['white', 'cyan', 'green', 'yellow', 'red', 'red'] as const
-  const levelColor = zipObject(levels, colors) as Record<Level, string>
-
-  return trough()
-    // Filter
-    .use(filter(({ options, level }: LoggerContext) =>
-      levelWeight[options.level] <= levelWeight[level]
-    ))
-    // Appender
-    .use(date())
-    .use(level(levelColor))
-    .use(message())
-    .use(error())
-    // Output
-    .use(colorConsole())
-    .use(logFile())
 }

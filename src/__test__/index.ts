@@ -1,4 +1,4 @@
-import createLogger from "@/index"
+import { createLogger } from "@/index"
 
 
 const logger = createLogger({ logFile: `${__dirname}/log.log` })

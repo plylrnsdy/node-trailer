@@ -7,7 +7,13 @@ import indent from "@/utils/formatter/indent"
 import messagePart from "./message-part"
 
 
-export default function message(root: string = process.cwd()) {
+/**
+ * When no error in log, print call stack;
+ * When an error in log, print Error with the simplified stack.
+ *
+ * @param root project's root path
+ */
+export default function error(root: string = process.cwd()) {
 
   const callerPos = (e: DebugError) => `@ ${e.method} (${e.file}:${e.line}:${e.pos})`
 
