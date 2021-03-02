@@ -10,7 +10,7 @@ export function logFile(filename?: string) {
 
     if (!filepath) return next()
 
-    const text = appenders.map(({ raw, text }) => text(raw(ctx), ctx)).join(' ')
+    const text = appenders.map(({ text }) => text(ctx)).join(' ')
 
     return fs.appendFile(filepath, text + '\n')
       .then(next)

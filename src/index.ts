@@ -10,7 +10,7 @@ import { Appender } from '@/middlewares/appender'
 import defaultTheme from '@/themes/default'
 
 export { default as filter } from '@/middlewares/filter'
-export { Appender, date, error, level, message } from '@/middlewares/appender'
+export { AppenderOptions, Appender, date, error, level, message } from '@/middlewares/appender'
 export { colorConsole, logFile } from '@/middlewares/output'
 
 
@@ -19,7 +19,7 @@ export type LoggerContext = {
   level: Level
   args: any[]
   error: Error
-  appenders: Appender<LoggerContext, any>[]
+  appenders: Appender<any>[]
 }
 
 /**

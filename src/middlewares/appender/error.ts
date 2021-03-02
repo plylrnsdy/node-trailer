@@ -1,5 +1,4 @@
 import { partial, flow } from "lodash"
-import { LoggerContext } from "@/index"
 import DebugError from "@/core/debug-error"
 import * as stackCleaner from '@/utils/formatter/clean-stack'
 import { font } from "@/utils/formatter/console-style"
@@ -24,8 +23,8 @@ export default function error(root: string = process.cwd()) {
     partial(indent, 4),
   )
 
-  return appender<LoggerContext, string>({
-    name: 'error',
+  return appender<string>({
+    name: error.name,
 
     raw: ({ error: e }) => e instanceof DebugError
       ? callerPos(e)
@@ -35,6 +34,6 @@ export default function error(root: string = process.cwd()) {
       ? callerPos(e)
       : clear(e.stack!) + '\n',
 
-    colorize: raw => raw.startsWith('@') ? font('grey', raw) : raw,
+    colorize: text => text.startsWith('@') ? font('grey', text) : text,
   })
 }

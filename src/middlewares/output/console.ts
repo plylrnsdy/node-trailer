@@ -4,7 +4,7 @@ export function rawConsole() {
 
   return (ctx: LoggerContext, next) => {
     console.log(
-      ...ctx.appenders.map(({ raw, text }) => text(raw(ctx), ctx))
+      ...ctx.appenders.map(({ text }) => text(ctx))
     )
     return next()
   }
@@ -14,7 +14,7 @@ export function colorConsole() {
 
   return (ctx: LoggerContext, next) => {
     console.log(
-      ...ctx.appenders.map(({ raw, text, colorize }) => colorize(text(raw(ctx), ctx), ctx))
+      ...ctx.appenders.map(({ colorize }) => colorize(ctx))
     )
     return next()
   }
