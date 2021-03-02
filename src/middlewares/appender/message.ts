@@ -1,16 +1,16 @@
 import { identity } from "lodash"
 import { LoggerContext } from "@/index"
-import messagePart from "./message-part"
+import appender from "./appender"
 
 
 /**
  * print log's content
  */
 export default function message() {
-  return messagePart<LoggerContext, any[]>({
+  return appender<LoggerContext, any[]>({
     name: 'message',
-    part: ({ args }) => args,
-    raw: args => args.map(arg => arg + '').join(' '),
+    raw: ({ args }) => args,
+    text: args => args.map(arg => arg + '').join(' '),
     colorize: identity,
   })
 }

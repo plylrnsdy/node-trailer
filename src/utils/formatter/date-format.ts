@@ -1,7 +1,7 @@
 
 export default function dateFormat(template: string, date: Date) {
     const data = new DatePart(date)
-    return template.replace(/(\w)\1*/g, ($: string) => (data as any)[$] ?? '')
+    return template.replace(/(\w)\1*/g, ($: string) => data[$] ?? '')
 }
 
 class DatePart {

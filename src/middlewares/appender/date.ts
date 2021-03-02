@@ -1,7 +1,7 @@
 import { identity } from "lodash"
 import { LoggerContext } from "@/index"
 import dateFormat from "@/utils/formatter/date-format"
-import messagePart from "./message-part"
+import appender from "./appender"
 
 
 /**
@@ -10,10 +10,10 @@ import messagePart from "./message-part"
  * @param format Format of date & time, default as `'[YYYY-MM-DD HH:mm:ss]'`
  */
 export default function date(format: string = '[YYYY-MM-DD HH:mm:ss]') {
-  return messagePart<LoggerContext, Date>({
+  return appender<LoggerContext, Date>({
     name: 'date',
-    part: () => new Date(),
-    raw: (date) => dateFormat(format, date),
+    raw: () => new Date(),
+    text: (date) => dateFormat(format, date),
     colorize: identity,
   })
 }

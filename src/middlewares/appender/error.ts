@@ -4,7 +4,7 @@ import DebugError from "@/core/debug-error"
 import * as stackCleaner from '@/utils/formatter/clean-stack'
 import { font } from "@/utils/formatter/console-style"
 import indent from "@/utils/formatter/indent"
-import messagePart from "./message-part"
+import appender from "./appender"
 
 
 /**
@@ -24,14 +24,14 @@ export default function error(root: string = process.cwd()) {
     partial(indent, 4),
   )
 
-  return messagePart<LoggerContext, string>({
+  return appender<LoggerContext, string>({
     name: 'error',
 
-    part: ({ error: e }) => e instanceof DebugError
+    raw: ({ error: e }) => e instanceof DebugError
       ? callerPos(e)
       : indent(4, e.stack!) + '\n',
 
-    raw: (_, { error: e }) => e instanceof DebugError
+    text: (_, { error: e }) => e instanceof DebugError
       ? callerPos(e)
       : clear(e.stack!) + '\n',
 

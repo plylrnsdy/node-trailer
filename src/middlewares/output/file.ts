@@ -1,13 +1,18 @@
 import { promises as fs } from 'fs';
+import { LoggerContext } from '@/index';
 
 
 export function logFile(filename?: string) {
 
-  return (ctx, next) => {
-    const { options, messages } = ctx
-    const text = messages.map(({ part, raw }) => raw(part(ctx), ctx)).join(' ')
+  return (ctx: LoggerContext, next) => {
+    const { options, appenders } = ctx
+    const filepath = filename ?? options.logFile
 
-    return fs.appendFile(filename ?? options.logFile, text + '\n')
+    if (!filepath) return next()
+
+    const text = appenders.map(({ raw, text }) => text(raw(ctx), ctx)).join(' ')
+
+    return fs.appendFile(filepath, text + '\n')
       .then(next)
   }
 }
@@ -15,14 +20,14 @@ export function logFile(filename?: string) {
 
 export function jsonFile(filename?: string) {
 
-  return (ctx, next) => {
+  return (ctx: LoggerContext, next) => {
     const output = ctx.options.logFile ?? filename
 
     if (!output) return next()
 
-    const json = ctx.messages
-      .reduce((o, { name, part }) => {
-        o[name] = part(ctx)
+    const json = ctx.appenders
+      .reduce((o, { name, raw }) => {
+        o[name] = raw(ctx)
         return o
       }, {} as Record<string, any>)
 

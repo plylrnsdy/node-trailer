@@ -1,9 +1,10 @@
+import { LoggerContext } from "@/index"
 
 export function rawConsole() {
 
-  return (ctx, next) => {
+  return (ctx: LoggerContext, next) => {
     console.log(
-      ...ctx.messages.map(({ part, raw }) => raw(part(ctx), ctx))
+      ...ctx.appenders.map(({ raw, text }) => text(raw(ctx), ctx))
     )
     return next()
   }
@@ -11,9 +12,9 @@ export function rawConsole() {
 
 export function colorConsole() {
 
-  return (ctx, next) => {
+  return (ctx: LoggerContext, next) => {
     console.log(
-      ...ctx.messages.map(({ part, raw, colorize }) => colorize(raw(part(ctx), ctx), ctx))
+      ...ctx.appenders.map(({ raw, text, colorize }) => colorize(text(raw(ctx), ctx), ctx))
     )
     return next()
   }

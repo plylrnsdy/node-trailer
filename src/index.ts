@@ -6,11 +6,11 @@
 import { noop, zipObject } from 'lodash'
 import { Level, levels } from '@/core/levels'
 import DebugError from '@/core/debug-error'
-import { MessagePart } from '@/middlewares/appender'
+import { Appender } from '@/middlewares/appender'
 import defaultTheme from '@/themes/default'
 
 export { default as filter } from '@/middlewares/filter'
-export { MessagePart, date, error, level, message } from '@/middlewares/appender'
+export { Appender, date, error, level, message } from '@/middlewares/appender'
 export { colorConsole, logFile } from '@/middlewares/output'
 
 
@@ -19,7 +19,7 @@ export type LoggerContext = {
   level: Level
   args: any[]
   error: Error
-  messages: MessagePart<LoggerContext, any>[]
+  appenders: Appender<LoggerContext, any>[]
 }
 
 /**
@@ -92,7 +92,7 @@ export function createLogger(options: Partial<LoggerOptions> = {}, pipeline = de
     (...args: any[]) => {
       const errIdx = args.findIndex(arg => arg instanceof Error)
       const error = errIdx > -1 ? args.splice(errIdx, 1)[0] : new DebugError()
-      pipeline.run({ options: mergedOptions, level, args, error, messages: [] } as any, noop)
+      pipeline.run({ options: mergedOptions, level, args, error, appenders: [] } as any, noop)
     }
 
   return zipObject(levels, levels.map(log)) as Logger
