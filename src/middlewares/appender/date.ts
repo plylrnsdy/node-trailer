@@ -1,7 +1,8 @@
-import { identity } from "lodash"
 import dateFormat from "@/utils/formatter/date-format"
 import appender from "./appender"
 
+
+const raw = () => new Date()
 
 /**
  * Print current date & time
@@ -9,10 +10,12 @@ import appender from "./appender"
  * @param format Format of date & time, default as `'[YYYY-MM-DD HH:mm:ss]'`
  */
 export default function date(format: string = '[YYYY-MM-DD HH:mm:ss]') {
+  const text = () => dateFormat(format, raw())
+
   return appender<Date>({
     name: date.name,
-    raw: () => new Date(),
-    text: (date) => dateFormat(format, date),
-    colorize: identity,
+    raw,
+    text,
+    colorize: text,
   })
 }

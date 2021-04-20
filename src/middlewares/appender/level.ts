@@ -1,5 +1,6 @@
 import { Level } from "@/core/levels"
 import { font } from "@/utils/formatter/console-style"
+import { LoggerContext } from "@/."
 import appender from "./appender"
 
 /**
@@ -8,10 +9,14 @@ import appender from "./appender"
  * @param levelColor a mapping from level to color
  */
 export default function level(levelColor: Record<Level, string>) {
+  const raw = ({ level }: LoggerContext) => level
+  const text = (ctx: LoggerContext) => raw(ctx).toUpperCase().padEnd(5)
+  const colorize = (ctx: LoggerContext) => font(levelColor[ctx.level], text(ctx))
+
   return appender<string>({
     name: level.name,
-    raw: ({ level }) => level,
-    text: level => level.toUpperCase().padEnd(5),
-    colorize: (text, { level }) => font(levelColor[level], text),
+    raw,
+    text,
+    colorize,
   })
 }

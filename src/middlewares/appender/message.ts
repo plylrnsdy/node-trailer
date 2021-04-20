@@ -1,4 +1,4 @@
-import { identity } from "lodash"
+import { LoggerContext } from "@/."
 import appender from "./appender"
 
 
@@ -6,10 +6,13 @@ import appender from "./appender"
  * print log's content
  */
 export default function message() {
+  const raw = ({ args }: LoggerContext) => args
+  const text = (ctx: LoggerContext) => raw(ctx).map(arg => arg + '').join(' ')
+
   return appender<any[]>({
     name: message.name,
-    raw: ({ args }) => args,
-    text: args => args.map(arg => arg + '').join(' '),
-    colorize: identity,
+    raw,
+    text,
+    colorize: text,
   })
 }

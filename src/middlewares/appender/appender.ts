@@ -1,12 +1,5 @@
 import { LoggerContext } from "@/index"
 
-export interface AppenderOptions<U> {
-  name: string,
-  raw: (ctx: LoggerContext) => U
-  text: (raw: U, ctx: LoggerContext) => string
-  colorize: (text: string, ctx: LoggerContext) => string
-}
-
 export interface Appender<U> {
   name: string,
   raw: (ctx: LoggerContext) => U
@@ -14,13 +7,9 @@ export interface Appender<U> {
   colorize: (ctx: LoggerContext) => string
 }
 
-export default function appender<U>(opt: AppenderOptions<U>) {
+export default function appender<U>(middleware: Appender<U>) {
   return (ctx: LoggerContext, next) => {
-    ctx.appenders.push({
-      ...opt,
-      text: ctx => opt.text(opt.raw(ctx), ctx),
-      colorize: ctx => opt.colorize(opt.text(opt.raw(ctx), ctx), ctx)
-    })
+    ctx.appenders.push(middleware)
     return next()
   }
 }

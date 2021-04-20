@@ -3,6 +3,7 @@ import DebugError from "@/core/debug-error"
 import * as stackCleaner from '@/utils/formatter/clean-stack'
 import { font } from "@/utils/formatter/console-style"
 import indent from "@/utils/formatter/indent"
+import { LoggerContext } from "@/."
 import appender from "./appender"
 
 
@@ -23,17 +24,23 @@ export default function error(root: string = process.cwd()) {
     partial(indent, 4),
   )
 
+  const raw = ({ error: e }: LoggerContext) => e instanceof DebugError
+    ? callerPos(e)
+    : indent(4, e.stack!) + '\n'
+
+  const text = ({ error: e }: LoggerContext) => e instanceof DebugError
+    ? callerPos(e)
+    : clear(e.stack!) + '\n'
+
+  const colorize = (ctx: LoggerContext) => {
+    const txt = text(ctx)
+    return txt.startsWith('@') ? font('grey', txt) : txt
+  }
+
   return appender<string>({
     name: error.name,
-
-    raw: ({ error: e }) => e instanceof DebugError
-      ? callerPos(e)
-      : indent(4, e.stack!) + '\n',
-
-    text: (_, { error: e }) => e instanceof DebugError
-      ? callerPos(e)
-      : clear(e.stack!) + '\n',
-
-    colorize: text => text.startsWith('@') ? font('grey', text) : text,
+    raw,
+    text,
+    colorize,
   })
 }

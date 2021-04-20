@@ -10,7 +10,7 @@ import { Appender } from '@/middlewares/appender'
 import defaultTheme from '@/themes/default'
 
 export { default as filter } from '@/middlewares/filter'
-export { AppenderOptions, Appender, date, error, level, message } from '@/middlewares/appender'
+export { Appender, date, error, level, message } from '@/middlewares/appender'
 export { colorConsole, logFile } from '@/middlewares/output'
 
 
