@@ -2,6 +2,11 @@ import { promises as fs } from 'fs';
 import { LoggerContext } from '@/index';
 
 
+/**
+ * Output log to text file.
+ *
+ * @category middleware:output
+ */
 export function logFile(filename?: string) {
 
   return (ctx: LoggerContext, next) => {
@@ -18,6 +23,11 @@ export function logFile(filename?: string) {
 }
 
 
+/**
+ * Output log to json file.
+ *
+ * @category middleware:output
+ */
 export function jsonFile(filename?: string) {
 
   return (ctx: LoggerContext, next) => {

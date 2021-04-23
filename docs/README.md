@@ -1,3 +1,5 @@
+node-trailer - v0.2.1 / [Exports](modules.md)
+
 # node-trailer
 
 [![npm](https://img.shields.io/npm/v/node-trailer.svg)](https://npmjs.org/package/node-trailer)

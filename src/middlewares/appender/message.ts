@@ -4,6 +4,8 @@ import appender from "./appender"
 
 /**
  * print log's content
+ *
+ * @category middleware:appender
  */
 export default function message() {
   const raw = ({ args }: LoggerContext) => args

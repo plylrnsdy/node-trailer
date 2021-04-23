@@ -7,6 +7,7 @@ import appender from "./appender"
  * Print log's level
  *
  * @param levelColor a mapping from level to color
+ * @category middleware:appender
  */
 export default function level(levelColor: Record<Level, string>) {
   const raw = ({ level }: LoggerContext) => level

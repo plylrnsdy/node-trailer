@@ -1,6 +1,6 @@
 {
   "name": "node-trailer",
-  "description": "A logger construct by middleware.",
+  "description": "Logger built with middlewares.",
   "author": "plylrnsdy",
   "version": "0.2.1",
   "keywords": [
@@ -10,6 +10,7 @@
   "main": "out/src/index.js",
   "scripts": {
     "build": "ttsc -p .",
+    "doc": "jsdoc2md --configure ./jsdoc2md.json --heading-depth=3 --example-lang=js -t README.hbs --files ./src/**/*.ts > ./README.md & typedoc",
     "test": "mocha -r ./register ./src/**/*.spec.{js,ts}"
   },
   "dependencies": {
@@ -17,14 +18,22 @@
     "trough": "^1.0.5"
   },
   "devDependencies": {
+    "@babel/cli": "^7.12.17",
+    "@babel/core": "^7.12.17",
+    "@babel/preset-env": "^7.12.17",
+    "@babel/preset-typescript": "^7.12.17",
     "@types/chai": "^4.2.15",
     "@types/lodash": "^4.14.168",
     "@types/mocha": "^8.2.1",
     "@types/node": "^14.14.30",
     "chai": "^4.3.0",
+    "jsdoc-babel": "^0.5.0",
+    "jsdoc-to-markdown": "^6.0.1",
     "mocha": "^8.3.0",
     "ts-node": "^9.1.1",
     "ttypescript": "^1.5.12",
+    "typedoc": "^0.20.28",
+    "typedoc-plugin-markdown": "^3.5.0",
     "typescript": "^4.1.5",
     "typescript-transform-paths": "^2.2.3"
   },

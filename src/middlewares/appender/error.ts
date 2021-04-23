@@ -12,6 +12,7 @@ import appender from "./appender"
  * When an error in log, print Error with the simplified stack.
  *
  * @param root project's root path
+ * @category middleware:appender
  */
 export default function error(root: string = process.cwd()) {
 

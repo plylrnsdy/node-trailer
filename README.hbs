@@ -24,20 +24,24 @@ npm i -P node-trailer
 ## API Reference
 
 - node-trailer
+  {{#module name="node-trailer"}}
   - inner
-    - [createLogger()](./docs/modules.md#createLogger)
+    {{#functions scope="inner"}}
+    - [{{name}}()](./docs/modules.md#{{name}})
+    {{/functions}}
+    {{/module}}
     - :Middleware
-      - [filter()](./docs/modules.md#filter)
+      {{#functions category="middleware"}}
+      - [{{name}}()](./docs/modules.md#{{name}})
+      {{/functions}}
       - :Appender
-        - [date()](./docs/modules.md#date)
-        - [error()](./docs/modules.md#error)
-        - [level()](./docs/modules.md#level)
-        - [message()](./docs/modules.md#message)
+        {{#functions category="middleware:appender"}}
+        - [{{name}}()](./docs/modules.md#{{name}})
+        {{/functions}}
       - :Output
-        - [rawConsole()](./docs/modules.md#rawConsole)
-        - [colorConsole()](./docs/modules.md#colorConsole)
-        - [logFile()](./docs/modules.md#logFile)
-        - [jsonFile()](./docs/modules.md#jsonFile)
+        {{#functions category="middleware:output"}}
+        - [{{name}}()](./docs/modules.md#{{name}})
+        {{/functions}}
 
 ## Tests
 
