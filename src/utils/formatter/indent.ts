@@ -5,5 +5,5 @@
  * @param string Multiple line string.
  */
 export default function indent(indent: number, string: string) {
-  return string.replace(/(?:^|\n)(?!\n)/g, '\n' + ' '.repeat(indent));
+  return string.split('\n').map(line => ' '.repeat(indent) + line).join('\n')
 }

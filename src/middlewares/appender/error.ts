@@ -7,6 +7,17 @@ import { LoggerContext } from "@/."
 import appender from "./appender"
 
 
+const callerPos = (e: DebugError) => `@ ${e.method} (${e.file}:${e.line}:${e.pos})`
+
+const hoc = (fn: (s: string) => string) =>
+  ({ error: e }: LoggerContext) => e instanceof DebugError
+    ? callerPos(e)
+    : `\n${fn(e.stack!)}\n`
+
+const indent4 = partial(indent, 4)
+
+const raw = hoc(indent4)
+
 /**
  * When no error in log, print call stack;
  * When an error in log, print Error with the simplified stack.
@@ -15,24 +26,14 @@ import appender from "./appender"
  * @category middleware:appender
  */
 export default function error(root: string = process.cwd()) {
-
-  const callerPos = (e: DebugError) => `@ ${e.method} (${e.file}:${e.line}:${e.pos})`
-
   const clear = flow(
     stackCleaner.rejectNative(),
     stackCleaner.rejectThirdPart(),
     stackCleaner.simplifyRoot(root),
-    partial(indent, 4),
+    indent4,
   )
 
-  const raw = ({ error: e }: LoggerContext) => e instanceof DebugError
-    ? callerPos(e)
-    : indent(4, e.stack!) + '\n'
-
-  const text = ({ error: e }: LoggerContext) => e instanceof DebugError
-    ? callerPos(e)
-    : clear(e.stack!) + '\n'
-
+  const text = hoc(clear)
   const colorize = (ctx: LoggerContext) => {
     const txt = text(ctx)
     return txt.startsWith('@') ? font('grey', txt) : txt
