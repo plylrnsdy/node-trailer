@@ -1,8 +1,9 @@
 /**
- * 为多行字符串的添加缩进
- * @param indent 缩进空格数
- * @param string 多行字符串
+ * Add indent for multiple line string.
+ *
+ * @param indent Whitespace count of indentation.
+ * @param string Multiple line string.
  */
 export default function indent(indent: number, string: string) {
-    return string.replace(/(?:^|\n)(?!\n)/g, '\n' + ' '.repeat(indent));
+  return string.replace(/(?:^|\n)(?!\n)/g, '\n' + ' '.repeat(indent));
 }
