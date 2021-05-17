@@ -1,4 +1,4 @@
-node-trailer - v0.2.1 / [Exports](modules.md)
+node-trailer - v0.2.2 / [Exports](modules.md)
 
 # node-trailer
 
@@ -21,6 +21,36 @@ Install using [npm](https://www.npmjs.org/):
 
 ```sh
 npm i -P node-trailer
+```
+
+## Usage
+
+Basic usage:
+
+```javascript
+import createLogger from "node-trailer"
+
+const logger = createLogger({ level: 'info' })
+logger.log('log message.') // No output
+logger.info('info message.') //=> info message.
+```
+
+Customize:
+
+```javascript
+const pipeline = trough()
+  // Filter
+  .use(filter(({ options, level }: LoggerContext) =>
+    levelWeight[options.level] <= levelWeight[level]
+  ))
+  // Appender
+  .use(level(levelColor))
+  .use(message())
+  .use(error())
+  // Output
+  .use(colorConsole())
+
+const logger = createLogger({}, pipeline)
 ```
 
 ## API Reference

@@ -1,4 +1,4 @@
-[node-trailer - v0.2.1](../README.md) / [Exports](../modules.md) / Appender
+[node-trailer - v0.2.2](../README.md) / [Exports](../modules.md) / Appender
 
 # Interface: Appender<U\>
 
@@ -35,9 +35,9 @@ Name | Type |
 
 **Returns:** *string*
 
-Defined in: [middlewares/appender/appender.ts:7](https://github.com/plylrnsdy/node-trailer/blob/1af9c7d/src/middlewares/appender/appender.ts#L7)
+Defined in: [middlewares/appender/appender.ts:7](https://github.com/plylrnsdy/node-trailer/blob/b1a846f/src/middlewares/appender/appender.ts#L7)
 
-Defined in: [middlewares/appender/appender.ts:7](https://github.com/plylrnsdy/node-trailer/blob/1af9c7d/src/middlewares/appender/appender.ts#L7)
+Defined in: [middlewares/appender/appender.ts:7](https://github.com/plylrnsdy/node-trailer/blob/b1a846f/src/middlewares/appender/appender.ts#L7)
 
 ___
 
@@ -45,7 +45,7 @@ ___
 
 • **name**: *string*
 
-Defined in: [middlewares/appender/appender.ts:4](https://github.com/plylrnsdy/node-trailer/blob/1af9c7d/src/middlewares/appender/appender.ts#L4)
+Defined in: [middlewares/appender/appender.ts:4](https://github.com/plylrnsdy/node-trailer/blob/b1a846f/src/middlewares/appender/appender.ts#L4)
 
 ___
 
@@ -65,9 +65,9 @@ Name | Type |
 
 **Returns:** U
 
-Defined in: [middlewares/appender/appender.ts:5](https://github.com/plylrnsdy/node-trailer/blob/1af9c7d/src/middlewares/appender/appender.ts#L5)
+Defined in: [middlewares/appender/appender.ts:5](https://github.com/plylrnsdy/node-trailer/blob/b1a846f/src/middlewares/appender/appender.ts#L5)
 
-Defined in: [middlewares/appender/appender.ts:5](https://github.com/plylrnsdy/node-trailer/blob/1af9c7d/src/middlewares/appender/appender.ts#L5)
+Defined in: [middlewares/appender/appender.ts:5](https://github.com/plylrnsdy/node-trailer/blob/b1a846f/src/middlewares/appender/appender.ts#L5)
 
 ___
 
@@ -87,6 +87,6 @@ Name | Type |
 
 **Returns:** *string*
 
-Defined in: [middlewares/appender/appender.ts:6](https://github.com/plylrnsdy/node-trailer/blob/1af9c7d/src/middlewares/appender/appender.ts#L6)
+Defined in: [middlewares/appender/appender.ts:6](https://github.com/plylrnsdy/node-trailer/blob/b1a846f/src/middlewares/appender/appender.ts#L6)
 
-Defined in: [middlewares/appender/appender.ts:6](https://github.com/plylrnsdy/node-trailer/blob/1af9c7d/src/middlewares/appender/appender.ts#L6)
+Defined in: [middlewares/appender/appender.ts:6](https://github.com/plylrnsdy/node-trailer/blob/b1a846f/src/middlewares/appender/appender.ts#L6)

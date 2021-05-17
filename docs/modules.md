@@ -1,6 +1,6 @@
-[node-trailer - v0.2.1](README.md) / Exports
+[node-trailer - v0.2.2](README.md) / Exports
 
-# node-trailer - v0.2.1
+# node-trailer - v0.2.2
 
 **`typicalname`** trailer
 
@@ -15,6 +15,7 @@
 - [Logger](modules.md#logger)
 - [LoggerContext](modules.md#loggercontext)
 - [LoggerOptions](modules.md#loggeroptions)
+- [Middleware](modules.md#middleware)
 
 ### Other Functions
 
@@ -42,7 +43,7 @@
 
 Ƭ **Logger**: *Record*<Level, (...`args`: *any*[]) => *void*\>
 
-Defined in: [index.ts:43](https://github.com/plylrnsdy/node-trailer/blob/1af9c7d/src/index.ts#L43)
+Defined in: [index.ts:43](https://github.com/plylrnsdy/node-trailer/blob/b1a846f/src/index.ts#L43)
 
 ___
 
@@ -60,7 +61,7 @@ Name | Type |
 `level` | Level |
 `options` | [*LoggerOptions*](modules.md#loggeroptions) |
 
-Defined in: [index.ts:17](https://github.com/plylrnsdy/node-trailer/blob/1af9c7d/src/index.ts#L17)
+Defined in: [index.ts:17](https://github.com/plylrnsdy/node-trailer/blob/b1a846f/src/index.ts#L17)
 
 ___
 
@@ -77,7 +78,28 @@ Name | Type | Description |
 `level` | Level | Minimum level of log which can be output   |
 `logFile`? | *string* | The path of log file.   |
 
-Defined in: [index.ts:28](https://github.com/plylrnsdy/node-trailer/blob/1af9c7d/src/index.ts#L28)
+Defined in: [index.ts:28](https://github.com/plylrnsdy/node-trailer/blob/b1a846f/src/index.ts#L28)
+
+___
+
+### Middleware
+
+Ƭ **Middleware**: (`ctx`: [*LoggerContext*](modules.md#loggercontext), `next`: () => *Promise*<void\>) => *void* \| *Promise*<void\>
+
+#### Type declaration:
+
+▸ (`ctx`: [*LoggerContext*](modules.md#loggercontext), `next`: () => *Promise*<void\>): *void* \| *Promise*<void\>
+
+#### Parameters:
+
+Name | Type |
+:------ | :------ |
+`ctx` | [*LoggerContext*](modules.md#loggercontext) |
+`next` | () => *Promise*<void\> |
+
+**Returns:** *void* \| *Promise*<void\>
+
+Defined in: [index.ts:101](https://github.com/plylrnsdy/node-trailer/blob/b1a846f/src/index.ts#L101)
 
 ## Other Functions
 
@@ -124,7 +146,7 @@ Name | Type | Description |
 
 **Returns:** [*Logger*](modules.md#logger)
 
-Defined in: [index.ts:80](https://github.com/plylrnsdy/node-trailer/blob/1af9c7d/src/index.ts#L80)
+Defined in: [index.ts:80](https://github.com/plylrnsdy/node-trailer/blob/b1a846f/src/index.ts#L80)
 
 ___
 
@@ -132,25 +154,19 @@ ___
 
 ### filter
 
-▸ **filter**<T\>(`predicate`: (`ctx`: T) => *boolean*): (`ctx`: *any*, `next`: *any*) => *any*
+▸ **filter**(`predicate`: (`ctx`: [*LoggerContext*](modules.md#loggercontext)) => *boolean*): [*Middleware*](modules.md#middleware)
 
 if predicate is true, execute next middleware.
-
-#### Type parameters:
-
-Name |
-:------ |
-`T` |
 
 #### Parameters:
 
 Name | Type |
 :------ | :------ |
-`predicate` | (`ctx`: T) => *boolean* |
+`predicate` | (`ctx`: [*LoggerContext*](modules.md#loggercontext)) => *boolean* |
 
-**Returns:** *function*
+**Returns:** [*Middleware*](modules.md#middleware)
 
-Defined in: [middlewares/filter.ts:5](https://github.com/plylrnsdy/node-trailer/blob/1af9c7d/src/middlewares/filter.ts#L5)
+Defined in: [middlewares/filter.ts:7](https://github.com/plylrnsdy/node-trailer/blob/b1a846f/src/middlewares/filter.ts#L7)
 
 ___
 
@@ -158,7 +174,7 @@ ___
 
 ### date
 
-▸ **date**(`format?`: *string*): (`ctx`: [*LoggerContext*](modules.md#loggercontext), `next`: *any*) => *any*
+▸ **date**(`format?`: *string*): [*Middleware*](modules.md#middleware)
 
 Print current date & time
 
@@ -168,15 +184,15 @@ Name | Type | Default value | Description |
 :------ | :------ | :------ | :------ |
 `format` | *string* | '[YYYY-MM-DD HH:mm:ss]' | Format of date & time, default as `'[YYYY-MM-DD HH:mm:ss]'`   |
 
-**Returns:** *function*
+**Returns:** [*Middleware*](modules.md#middleware)
 
-Defined in: [middlewares/appender/date.ts:13](https://github.com/plylrnsdy/node-trailer/blob/1af9c7d/src/middlewares/appender/date.ts#L13)
+Defined in: [middlewares/appender/date.ts:13](https://github.com/plylrnsdy/node-trailer/blob/b1a846f/src/middlewares/appender/date.ts#L13)
 
 ___
 
 ### error
 
-▸ **error**(`root?`: *string*): (`ctx`: [*LoggerContext*](modules.md#loggercontext), `next`: *any*) => *any*
+▸ **error**(`root?`: *string*): [*Middleware*](modules.md#middleware)
 
 When no error in log, print call stack;
 When an error in log, print Error with the simplified stack.
@@ -187,15 +203,15 @@ Name | Type | Description |
 :------ | :------ | :------ |
 `root` | *string* | project's root path   |
 
-**Returns:** *function*
+**Returns:** [*Middleware*](modules.md#middleware)
 
-Defined in: [middlewares/appender/error.ts:17](https://github.com/plylrnsdy/node-trailer/blob/1af9c7d/src/middlewares/appender/error.ts#L17)
+Defined in: [middlewares/appender/error.ts:28](https://github.com/plylrnsdy/node-trailer/blob/b1a846f/src/middlewares/appender/error.ts#L28)
 
 ___
 
 ### level
 
-▸ **level**(`levelColor`: *Record*<Level, string\>): (`ctx`: [*LoggerContext*](modules.md#loggercontext), `next`: *any*) => *any*
+▸ **level**(`levelColor`: *Record*<Level, string\>): [*Middleware*](modules.md#middleware)
 
 Print log's level
 
@@ -205,21 +221,21 @@ Name | Type | Description |
 :------ | :------ | :------ |
 `levelColor` | *Record*<Level, string\> | a mapping from level to color   |
 
-**Returns:** *function*
+**Returns:** [*Middleware*](modules.md#middleware)
 
-Defined in: [middlewares/appender/level.ts:12](https://github.com/plylrnsdy/node-trailer/blob/1af9c7d/src/middlewares/appender/level.ts#L12)
+Defined in: [middlewares/appender/level.ts:12](https://github.com/plylrnsdy/node-trailer/blob/b1a846f/src/middlewares/appender/level.ts#L12)
 
 ___
 
 ### message
 
-▸ **message**(): (`ctx`: [*LoggerContext*](modules.md#loggercontext), `next`: *any*) => *any*
+▸ **message**(): [*Middleware*](modules.md#middleware)
 
 print log's content
 
-**Returns:** *function*
+**Returns:** [*Middleware*](modules.md#middleware)
 
-Defined in: [middlewares/appender/message.ts:10](https://github.com/plylrnsdy/node-trailer/blob/1af9c7d/src/middlewares/appender/message.ts#L10)
+Defined in: [middlewares/appender/message.ts:10](https://github.com/plylrnsdy/node-trailer/blob/b1a846f/src/middlewares/appender/message.ts#L10)
 
 ___
 
@@ -227,19 +243,19 @@ ___
 
 ### colorConsole
 
-▸ **colorConsole**(): (`ctx`: [*LoggerContext*](modules.md#loggercontext), `next`: *any*) => *any*
+▸ **colorConsole**(): [*Middleware*](modules.md#middleware)
 
 Output log to colorize console.
 
-**Returns:** *function*
+**Returns:** [*Middleware*](modules.md#middleware)
 
-Defined in: [middlewares/output/console.ts:24](https://github.com/plylrnsdy/node-trailer/blob/1af9c7d/src/middlewares/output/console.ts#L24)
+Defined in: [middlewares/output/console.ts:24](https://github.com/plylrnsdy/node-trailer/blob/b1a846f/src/middlewares/output/console.ts#L24)
 
 ___
 
 ### logFile
 
-▸ **logFile**(`filename?`: *string*): (`ctx`: [*LoggerContext*](modules.md#loggercontext), `next`: *any*) => *any*
+▸ **logFile**(`filename?`: *string*): [*Middleware*](modules.md#middleware)
 
 Output log to text file.
 
@@ -249,6 +265,6 @@ Name | Type |
 :------ | :------ |
 `filename?` | *string* |
 
-**Returns:** *function*
+**Returns:** [*Middleware*](modules.md#middleware)
 
-Defined in: [middlewares/output/file.ts:10](https://github.com/plylrnsdy/node-trailer/blob/1af9c7d/src/middlewares/output/file.ts#L10)
+Defined in: [middlewares/output/file.ts:10](https://github.com/plylrnsdy/node-trailer/blob/b1a846f/src/middlewares/output/file.ts#L10)

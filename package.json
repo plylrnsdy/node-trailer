@@ -2,7 +2,7 @@
   "name": "node-trailer",
   "description": "Logger built with middlewares.",
   "author": "plylrnsdy",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "keywords": [
     "logger",
     "log"

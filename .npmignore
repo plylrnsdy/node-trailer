@@ -1,7 +1,12 @@
 .vscode
+__test__
 images
-out/test
+out/**/*.map
+register
 src
-test
 .editorconfig
+.gitignore
+jsdoc2md.json
+README.hbs
 tsconfig.json
+typedoc.json
