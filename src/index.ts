@@ -97,3 +97,5 @@ export function createLogger(options: Partial<LoggerOptions> = {}, pipeline = de
 
   return zipObject(levels, levels.map(log)) as Logger
 }
+
+export type Middleware = (ctx: LoggerContext, next: () => Promise<void>) => void | Promise<void>

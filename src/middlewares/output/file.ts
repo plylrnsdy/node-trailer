@@ -1,5 +1,5 @@
 import { promises as fs } from 'fs';
-import { LoggerContext } from '@/index';
+import { Middleware } from '@/index';
 
 
 /**
@@ -7,9 +7,9 @@ import { LoggerContext } from '@/index';
  *
  * @category middleware:output
  */
-export function logFile(filename?: string) {
+export function logFile(filename?: string): Middleware {
 
-  return (ctx: LoggerContext, next) => {
+  return (ctx, next) => {
     const { options, appenders } = ctx
     const filepath = filename ?? options.logFile
 
@@ -28,9 +28,9 @@ export function logFile(filename?: string) {
  *
  * @category middleware:output
  */
-export function jsonFile(filename?: string) {
+export function jsonFile(filename?: string): Middleware {
 
-  return (ctx: LoggerContext, next) => {
+  return (ctx, next) => {
     const output = ctx.options.logFile ?? filename
 
     if (!output) return next()

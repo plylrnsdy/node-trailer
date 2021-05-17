@@ -1,4 +1,4 @@
-import { LoggerContext } from "@/index"
+import { LoggerContext, Middleware } from "@/index"
 
 export interface Appender<U> {
   name: string,
@@ -7,8 +7,8 @@ export interface Appender<U> {
   colorize: (ctx: LoggerContext) => string
 }
 
-export default function appender<U>(middleware: Appender<U>) {
-  return (ctx: LoggerContext, next) => {
+export default function appender<U>(middleware: Appender<U>): Middleware {
+  return (ctx, next) => {
     ctx.appenders.push(middleware)
     return next()
   }

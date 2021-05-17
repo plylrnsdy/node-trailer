@@ -4,7 +4,6 @@ import { Level, levels, levelWeight } from '@/core/levels'
 import filter from '@/middlewares/filter'
 import { date, error, level, message } from '@/middlewares/appender'
 import { colorConsole, logFile } from '@/middlewares/output'
-import type { LoggerContext } from '..'
 
 
 export default function defaultTheme() {
@@ -13,7 +12,7 @@ export default function defaultTheme() {
 
   return trough()
     // Filter
-    .use(filter(({ options, level }: LoggerContext) =>
+    .use(filter(({ options, level }) =>
       levelWeight[options.level] <= levelWeight[level]
     ))
     // Appender

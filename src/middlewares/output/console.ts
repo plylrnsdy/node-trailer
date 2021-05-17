@@ -1,4 +1,4 @@
-import { LoggerContext } from "@/index"
+import { Middleware } from "@/index"
 
 
 /**
@@ -6,9 +6,9 @@ import { LoggerContext } from "@/index"
  *
  * @category middleware:output
  */
-export function rawConsole() {
+export function rawConsole(): Middleware {
 
-  return (ctx: LoggerContext, next) => {
+  return (ctx, next) => {
     console.log(
       ...ctx.appenders.map(({ text }) => text(ctx))
     )
@@ -21,9 +21,9 @@ export function rawConsole() {
  *
  * @category middleware:output
  */
-export function colorConsole() {
+export function colorConsole(): Middleware {
 
-  return (ctx: LoggerContext, next) => {
+  return (ctx, next) => {
     console.log(
       ...ctx.appenders.map(({ colorize }) => colorize(ctx))
     )
