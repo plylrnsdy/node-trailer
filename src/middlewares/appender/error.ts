@@ -16,7 +16,11 @@ const hoc = (fn: (s: string) => string) =>
 
 const indent4 = partial(indent, 4)
 
-const raw = hoc(indent4)
+const raw = ({ error: e }: LoggerContext) => ({
+  type: e.constructor.name,
+  message: e.message,
+  stack: e.stack
+})
 
 /**
  * When no error in log, print call stack;
@@ -25,7 +29,7 @@ const raw = hoc(indent4)
  * @param root project's root path
  * @category middleware:appender
  */
-export default function error(root: string = process.cwd()) {
+export default function error(root = process.cwd()) {
   const clear = flow(
     stackCleaner.rejectNative(),
     stackCleaner.rejectThirdPart(),
@@ -39,7 +43,7 @@ export default function error(root: string = process.cwd()) {
     return txt.startsWith('@') ? font('grey', txt) : txt
   }
 
-  return appender<string>({
+  return appender<ReturnType<typeof raw>>({
     name: error.name,
     raw,
     text,
