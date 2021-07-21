@@ -1,3 +1,4 @@
+import * as util from "util"
 import { LoggerContext } from "@/."
 import appender from "./appender"
 
@@ -9,7 +10,9 @@ import appender from "./appender"
  */
 export default function message() {
   const raw = ({ args }: LoggerContext) => args
-  const text = (ctx: LoggerContext) => raw(ctx).map(arg => arg + '').join(' ')
+  const text = (ctx: LoggerContext) => raw(ctx)
+    .map(arg => typeof arg === 'object' ? util.inspect(arg, false) : arg.toString())
+    .join(' ')
 
   return appender<any[]>({
     name: message.name,
