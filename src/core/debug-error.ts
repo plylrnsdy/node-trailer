@@ -2,16 +2,16 @@ import * as path from 'path';
 
 
 // Stack trace format: https://v8.dev/docs/stack-trace-api
-const stackRe = /at (.+) \((?:\w:)?([^:]+):(\d+):(\d+)\)/i;
-const stackRe2 = /at ()([^:]+):(\d+):(\d+)/i;
+const stackRe = /at (.+) \(((?:\w:)?[^:]+):(\d+):(\d+)\)/i;
+const stackRe2 = /at ()((?:\w:)?[^:]+):(\d+):(\d+)/i;
 
 export default class DebugError extends Error {
 
-  method: string = ''
-  path: string = ''
-  file: string = ''
-  line: string = ''
-  pos: string = ''
+  method = ''
+  path = ''
+  file = ''
+  line = -1
+  pos = -1
 
   constructor() {
     super();
@@ -25,8 +25,8 @@ export default class DebugError extends Error {
       this.method = $method;
       this.path = $path;
       this.file = path.basename($path);
-      this.line = $line;
-      this.pos = $pos;
+      this.line = +$line;
+      this.pos = +$pos;
     }
   }
 }
