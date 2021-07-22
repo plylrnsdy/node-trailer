@@ -1,4 +1,4 @@
-import { LoggerContext, Middleware } from '..'
+import { LoggerContext, Middleware } from '@/index'
 
 /**
  * if predicate is true, execute next middleware.

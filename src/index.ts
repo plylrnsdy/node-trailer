@@ -3,16 +3,19 @@
  * @typicalname trailer
  */
 
+import * as trough from 'trough'
 import { Level, levels } from '@/core/levels'
 import DebugError from '@/core/debug-error'
-import { Appender } from '@/middlewares/appender'
+import { Appender } from '@/middlewares/appenders'
 import defaultTheme from '@/themes/default'
 import noop from '@/utils/function/noop'
 import zipObject from '@/utils/zip-object'
 
-export { default as filter } from '@/middlewares/filter'
-export * from '@/middlewares/appender'
-export * from '@/middlewares/output'
+export const createPipeline = trough
+export * as themes from '@/themes'
+export * as filters from '@/middlewares/filters'
+export * as appenders from '@/middlewares/appenders'
+export * as outputs from '@/middlewares/outputs'
 
 
 export type LoggerContext = {
