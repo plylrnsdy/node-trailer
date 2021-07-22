@@ -5,7 +5,6 @@
 
 import * as trough from 'trough'
 import { Level, levels } from '@/core/levels'
-import DebugError from '@/core/debug-error'
 import { Appender } from '@/middlewares/appenders'
 import defaultTheme from '@/themes/default'
 import noop from '@/utils/function/noop'
@@ -22,7 +21,7 @@ export type LoggerContext = {
   options: LoggerOptions
   level: Level
   args: any[]
-  error: Error
+  positionError: Error
   appenders: Appender<any>[]
 }
 
@@ -94,9 +93,14 @@ export function createLogger(options: Partial<LoggerOptions> = {}, pipeline = de
      * @return {void}
      */
     (...args: any[]) => {
-      const errIdx = args.findIndex(arg => arg instanceof Error)
-      const error = errIdx > -1 ? args.splice(errIdx, 1)[0] : new DebugError()
-      pipeline.run({ options: mergedOptions, level, args, error, appenders: [] } as any, noop)
+      const ctx = {
+        options: mergedOptions,
+        level,
+        args,
+        appenders: [],
+        positionError: Error('Use for getting logger called position.')
+      }
+      pipeline.run(ctx, noop)
     }
 
   return zipObject(levels, levels.map(log)) as Logger

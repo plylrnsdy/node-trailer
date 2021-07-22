@@ -1,7 +1,7 @@
 import * as trough from 'trough'
 import { levels } from '@/core/levels'
 import { filterByLevel } from '@/middlewares/filters'
-import { date, error, level, message } from '@/middlewares/appenders'
+import { date, level, message, position } from '@/middlewares/appenders'
 import { colorConsole, logFile } from '@/middlewares/outputs'
 import zipObject from '@/utils/zip-object'
 
@@ -17,7 +17,7 @@ function defaultTheme() {
     .use(date())
     .use(level(levelColor))
     .use(message())
-    .use(error())
+    .use(position())
     // Output
     .use(colorConsole())
     .use(logFile())
