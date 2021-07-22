@@ -1,7 +1,7 @@
-import { createLogger } from "@/index"
+import { createLogger, themes } from "@/index"
 
 
-const logger = createLogger({ logFile: `${__dirname}/index.log` })
+const logger = createLogger({ logFile: `${__dirname}/theme-default-plus.log` }, themes.defaultPlus())
 
 logger.log('test')
 logger.debug('test')
