@@ -1,4 +1,4 @@
-import * as trough from 'trough'
+import { createPipeline } from '@/index'
 import { levels } from '@/core/levels'
 import { filterByLevel } from '@/middlewares/filters'
 import { date, level, message, position } from '@/middlewares/appenders'
@@ -10,7 +10,7 @@ export const colors = ['white', 'cyan', 'green', 'yellow', 'red', 'red'] as cons
 export const levelColor = zipObject(levels, colors)
 
 function defaultTheme() {
-  return trough()
+  return createPipeline()
     // Filter
     .use(filterByLevel)
     // Appender

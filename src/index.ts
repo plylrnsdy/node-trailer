@@ -10,7 +10,13 @@ import defaultTheme from '@/themes/default'
 import noop from '@/utils/function/noop'
 import zipObject from '@/utils/zip-object'
 
-export const createPipeline = trough
+
+export interface Pipeline {
+  use(middleware: Middleware): this
+  run(ctx: any, onCompleted: () => void): void
+}
+
+export const createPipeline: () => Pipeline = trough
 export * as themes from '@/themes'
 export * as filters from '@/middlewares/filters'
 export * as appenders from '@/middlewares/appenders'
