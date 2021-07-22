@@ -15,7 +15,7 @@ function defaultTheme() {
     .use(filterByLevel)
     // Appender
     .use(date())
-    .use(level(levelColor))
+    .use(level({ levelColor }))
     .use(message())
     .use(position())
     // Output

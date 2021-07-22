@@ -1,7 +1,20 @@
-import { Level } from "@/core/levels"
-import { font } from "@/utils/formatter/console-style"
+import * as chalk from 'chalk'
+import type { Color } from 'chalk'
 import { LoggerContext } from "@/."
+import { Level } from "@/core/levels"
 import appender from "./appender"
+
+
+interface LevelOptions {
+  /**
+   * Use default colorize function based on level-color map
+   */
+  levelColor?: Record<Level, typeof Color>
+  /**
+   * Custom colorize function
+   */
+  colorize?: (ctx: LoggerContext) => string
+}
 
 /**
  * Print log's level
@@ -9,15 +22,16 @@ import appender from "./appender"
  * @param levelColor a mapping from level to color
  * @category middleware:appender
  */
-export default function level(levelColor: Record<Level, string>) {
+export default function level(options: LevelOptions) {
+  const { levelColor, colorize } = options
   const raw = ({ level }: LoggerContext) => level
   const text = (ctx: LoggerContext) => raw(ctx).toUpperCase().padEnd(5)
-  const colorize = (ctx: LoggerContext) => font(levelColor[ctx.level], text(ctx))
+  const defaultColorize = (ctx: LoggerContext) => chalk[levelColor![ctx.level]](text(ctx))
 
   return appender<string>({
     name: level.name,
     raw,
     text,
-    colorize,
+    colorize: colorize ?? levelColor ? defaultColorize : text,
   })
 }
