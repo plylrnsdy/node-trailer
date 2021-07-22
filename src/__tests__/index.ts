@@ -1,7 +1,7 @@
 import { createLogger } from "@/index"
 
 
-const logger = createLogger({ logFile: `${__dirname}/log.log` })
+const logger = createLogger({ logFile: `${__dirname}/index.log` })
 
 logger.log('test')
 logger.debug('test')

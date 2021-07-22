@@ -10,14 +10,13 @@ import { Middleware } from '@/index';
 export function logFile(filename?: string): Middleware {
 
   return (ctx, next) => {
-    const { options, appenders } = ctx
-    const filepath = filename ?? options.logFile
+    const output = ctx.options.logFile ?? filename
 
-    if (!filepath) return next()
+    if (!output) return next()
 
-    const text = appenders.map(({ text }) => text(ctx)).join(' ')
+    const text = ctx.appenders.map(({ text }) => text(ctx)).join(' ')
 
-    return fs.appendFile(filepath, text + '\n')
+    return fs.appendFile(output, text + '\n')
       .then(next)
   }
 }
@@ -36,10 +35,7 @@ export function jsonFile(filename?: string): Middleware {
     if (!output) return next()
 
     const json = ctx.appenders
-      .reduce((o, { name, raw }) => {
-        o[name] = raw(ctx)
-        return o
-      }, {} as Record<string, any>)
+      .reduce<Record<string, any>>((o, { name, raw }) => (o[name] = raw(ctx), o), {})
 
     return fs.appendFile(output, `${JSON.stringify(json)}\n`)
       .then(next)
