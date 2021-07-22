@@ -60,9 +60,9 @@ const logger = createLogger({}, pipeline)
       - [filter()](./docs/modules.md#filter)
       - :Appender
         - [date()](./docs/modules.md#date)
-        - [error()](./docs/modules.md#error)
         - [level()](./docs/modules.md#level)
         - [message()](./docs/modules.md#message)
+        - [position()](./docs/modules.md#position)
       - :Output
         - [rawConsole()](./docs/modules.md#rawConsole)
         - [colorConsole()](./docs/modules.md#colorConsole)
