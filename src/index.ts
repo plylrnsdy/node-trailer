@@ -3,15 +3,16 @@
  * @typicalname trailer
  */
 
-import { noop, zipObject } from 'lodash'
 import { Level, levels } from '@/core/levels'
 import DebugError from '@/core/debug-error'
 import { Appender } from '@/middlewares/appender'
 import defaultTheme from '@/themes/default'
+import noop from '@/utils/function/noop'
+import zipObject from '@/utils/zip-object'
 
 export { default as filter } from '@/middlewares/filter'
-export { Appender, date, error, level, message } from '@/middlewares/appender'
-export { colorConsole, logFile } from '@/middlewares/output'
+export * from '@/middlewares/appender'
+export * from '@/middlewares/output'
 
 
 export type LoggerContext = {

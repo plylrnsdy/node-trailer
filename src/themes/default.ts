@@ -1,14 +1,14 @@
-import { zipObject } from 'lodash'
 import * as trough from 'trough'
-import { Level, levels, levelWeight } from '@/core/levels'
+import { levels, levelWeight } from '@/core/levels'
 import filter from '@/middlewares/filter'
 import { date, error, level, message } from '@/middlewares/appender'
 import { colorConsole, logFile } from '@/middlewares/output'
+import zipObject from '@/utils/zip-object'
 
 
 export default function defaultTheme() {
   const colors = ['white', 'cyan', 'green', 'yellow', 'red', 'red'] as const
-  const levelColor = zipObject(levels, colors) as Record<Level, string>
+  const levelColor = zipObject(levels, colors)
 
   return trough()
     // Filter

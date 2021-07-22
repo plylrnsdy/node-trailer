@@ -1,8 +1,9 @@
-import { partial, flow } from "lodash"
 import DebugError from "@/core/debug-error"
 import * as stackCleaner from '@/utils/formatter/clean-stack'
 import { font } from "@/utils/formatter/console-style"
 import indent from "@/utils/formatter/indent"
+import flow from "@/utils/function/flow"
+import partial from "@/utils/function/partial"
 import { LoggerContext } from "@/."
 import appender from "./appender"
 
