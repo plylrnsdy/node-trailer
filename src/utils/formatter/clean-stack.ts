@@ -28,6 +28,6 @@ export function rejectThirdPart() {
  */
 export function rejectNative() {
   return (stack: string) => {
-    return stack.replace(/\n?.+\(internal\/.+/g, '')
+    return stack.replace(/\n?.+\((?:node:)?internal\/.+/g, '')
   }
 }
