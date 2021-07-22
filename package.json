@@ -7,9 +7,9 @@
     "logger",
     "log"
   ],
-  "main": "out/src/index.js",
+  "main": "out/index.js",
   "scripts": {
-    "build": "ttsc -p .",
+    "build": "ttsc -p tsconfig.prod.json",
     "doc": "jsdoc2md --configure ./jsdoc2md.json --heading-depth=3 --example-lang=js -t README.hbs --files ./src/**/*.ts > ./README.md && typedoc",
     "test": "mocha -r ./register ./src/**/*.spec.{js,ts}",
     "publish": "npm run test && npm run build && npm run doc && npm publish"

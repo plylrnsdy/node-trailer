@@ -1,5 +1,5 @@
 .vscode
-__test__
+__tests__
 images
 out/**/*.map
 register

@@ -12,6 +12,6 @@
   },
   "source": {
     "includePattern": ".+\\.ts(doc|x)?$",
-    "excludePattern": "__test__"
+    "excludePattern": "__tests__"
   }
 }

@@ -2,7 +2,7 @@
   "compilerOptions": {
     "rootDir": "./src",
     "outDir": "out",
-    "sourceMap": true,
+    "sourceMap": false,
     "declaration": true,
     "removeComments": true,
 
@@ -29,6 +29,7 @@
   "exclude": [
     ".vscode",
     "node_modules",
-    "out"
+    "out",
+    "**/__tests__"
   ]
 }

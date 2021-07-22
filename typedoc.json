@@ -3,7 +3,7 @@
     "./src/index.ts"
   ],
   "exclude": [
-    "**/__test__/**/*.ts"
+    "**/__tests__/**/*.ts"
   ],
   "readme": "./README.md",
   "includeVersion": true,
