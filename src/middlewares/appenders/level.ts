@@ -13,7 +13,7 @@ interface LevelOptions {
   /**
    * Custom colorize function
    */
-  colorize?: (ctx: LoggerContext) => string
+  colorize?: (ctx: LoggerContext, text: string) => string
 }
 
 /**
@@ -32,6 +32,8 @@ export default function level(options: LevelOptions) {
     name: level.name,
     raw,
     text,
-    colorize: colorize ?? levelColor ? defaultColorize : text,
+    colorize: colorize
+      ? ctx => colorize(ctx, text(ctx))
+      : levelColor ? defaultColorize : text,
   })
 }
